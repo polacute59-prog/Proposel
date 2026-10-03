@@ -1,0 +1,334 @@
+`html
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For Nahida ❤️</title>
+    <!-- Tailwind CSS for clean layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Modern and ultra-clean Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f051d;
+            background: radial-gradient(circle at center, #320a3e 0%, #0d041a 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        /* Romantic Glass Card */
+        .romantic-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6),
+                        0 0 40px rgba(255, 20, 147, 0.25);
+        }
+
+        /* High-Contrast Yes Button */
+        .btn-yes {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            box-shadow: 0 0 25px rgba(255, 20, 147, 0.8),
+                        0 0 45px rgba(255, 105, 180, 0.5);
+            animation: pulseGlow 1.8s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 20, 147, 0.7), 0 0 35px rgba(255, 105, 180, 0.4);
+            }
+            50% {
+                transform: scale(1.06);
+                box-shadow: 0 0 32px rgba(255, 20, 147, 1), 0 0 55px rgba(255, 105, 180, 0.8);
+            }
+        }
+
+        /* Evasive Runaway No Button */
+        .btn-no {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffd1dc;
+            transition: all 0.12s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+            will-change: transform, left, top;
+        }
+
+        /* Canvas for floating background particles */
+        #heart-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .pop-in {
+            animation: popIn 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .kiss-text {
+            text-shadow: 0 0 25px #ff1493, 0 0 50px #ff69b4, 0 0 75px #ff0055;
+            animation: textBounce 1.8s infinite ease-in-out alternate;
+        }
+
+        @keyframes textBounce {
+            from { transform: translateY(0px) scale(1); }
+            to { transform: translateY(-10px) scale(1.05); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 relative">
+
+    <!-- Background Canvas for Hearts -->
+    <canvas id="heart-canvas"></canvas>
+
+    <!-- MAIN PROPOSAL CARD -->
+    <div id="proposal-card" class="romantic-card relative z-10 w-full max-w-md rounded-3xl p-8 text-center text-white transition-all duration-500">
+        
+        <!-- Animated Heart Badge -->
+        <div class="mb-6 inline-block relative">
+            <div class="w-20 h-20 mx-auto rounded-full bg-pink-500/20 border border-pink-400/50 flex items-center justify-center text-pink-400 text-4xl shadow-lg">
+                <i class="fa-solid fa-heart animate-bounce"></i>
+            </div>
+            <span class="absolute -top-1 -right-1 flex h-4 w-4">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-4 w-4 bg-pink-500"></span>
+            </span>
+        </div>
+
+        <!-- Clean, High-Contrast Heading -->
+        <div class="mb-8 space-y-2">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-pink-200 tracking-wide uppercase">
+                I Love You Nahida
+            </h1>
+            <p class="text-3xl sm:text-4xl font-black text-pink-400 drop-shadow-md tracking-normal">
+                Do you love me?
+            </p>
+        </div>
+
+        <!-- Buttons Container -->
+        <div id="button-area" class="relative min-h-[120px] flex items-center justify-center gap-6">
+            
+            <!-- YES BUTTON -->
+            <button id="yes-btn" onclick="acceptProposal()" class="btn-yes px-9 py-3.5 rounded-full text-white font-extrabold text-lg tracking-wider transition-all duration-300 transform active:scale-90 flex items-center gap-2">
+                <i class="fa-solid fa-heart-circle-check"></i> YES
+            </button>
+
+            <!-- EVASIVE NO BUTTON -->
+            <button id="no-btn" class="btn-no px-9 py-3.5 rounded-full font-extrabold text-lg flex items-center gap-2">
+                <i class="fa-solid fa-xmark"></i> NO
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- SUCCESS SCREEN (REVEALED ON CLICKING YES) -->
+    <div id="success-screen" class="hidden fixed inset-0 z-20 flex flex-col items-center justify-center p-6 text-center text-white bg-black/70 backdrop-blur-md">
+        
+        <div class="pop-in max-w-lg space-y-6">
+            
+            <!-- Floating Emojis -->
+            <div class="text-6xl sm:text-7xl animate-pulse">
+                💖 😍 🥰
+            </div>
+
+            <!-- Big Clear Kiss Text -->
+            <h1 class="kiss-text font-black text-5xl sm:text-7xl text-pink-300 tracking-wider">
+                ummmmmmmah 😘
+            </h1>
+
+            <p class="text-xl sm:text-2xl text-pink-100 font-bold max-w-md mx-auto">
+                I knew it! Love you so much Nahida! Forever and Always ❤️
+            </p>
+
+            <div class="pt-4">
+                <div class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-pink-500/30 border border-pink-400/60 text-pink-200 text-base font-semibold shadow-xl">
+                    <i class="fa-solid fa-sparkles text-yellow-300"></i> Best day ever!
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const proposalCard = document.getElementById('proposal-card');
+        const successScreen = document.getElementById('success-screen');
+        const canvas = document.getElementById('heart-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Function to move the 'No' button randomly when touched or hovered
+        function moveNoButton(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            const padding = 25;
+            const btnWidth = noBtn.offsetWidth || 100;
+            const btnHeight = noBtn.offsetHeight || 50;
+
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
+
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+            noBtn.style.zIndex = '50';
+
+            const randomRotate = (Math.random() - 0.5) * 24;
+            noBtn.style.transform = `scale(0.95) rotate(${randomRotate}deg)`;
+        }
+
+        // Attach touch and pointer listeners for maximum responsiveness
+        noBtn.addEventListener('mouseenter', moveNoButton);
+        noBtn.addEventListener('touchstart', moveNoButton, { passive: false });
+        noBtn.addEventListener('pointerdown', moveNoButton);
+        noBtn.addEventListener('click', moveNoButton);
+
+        function acceptProposal() {
+            proposalCard.style.opacity = '0';
+            proposalCard.style.transform = 'scale(0.8)';
+
+            setTimeout(() => {
+                proposalCard.classList.add('hidden');
+                successScreen.classList.remove('hidden');
+                triggerHeartExplosion();
+            }, 300);
+        }
+
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class HeartParticle {
+            constructor(isExplosion = false) {
+                this.isExplosion = isExplosion;
+                this.reset();
+            }
+
+            reset() {
+                this.x = this.isExplosion ? window.innerWidth / 2 : Math.random() * canvas.width;
+                this.y = this.isExplosion ? window.innerHeight / 2 : canvas.height + Math.random() * 80;
+                
+                this.size = Math.random() * 20 + 12;
+                
+                if (this.isExplosion) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 14 + 5;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed;
+                } else {
+                    this.vx = (Math.random() - 0.5) * 1.5;
+                    this.vy = -(Math.random() * 2 + 1);
+                }
+
+                this.alpha = Math.random() * 0.7 + 0.3;
+                this.rot = Math.random() * Math.PI * 2;
+                this.rotSpeed = (Math.random() - 0.5) * 0.05;
+                
+                const heartIcons = ['💖', '💕', '💋', '❤️', '😘', '✨'];
+                this.char = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.rot += this.rotSpeed;
+
+                if (this.isExplosion) {
+                    this.vy += 0.16; // Gravity
+                    this.alpha -= 0.009; // Fade
+                }
+
+                if (!this.isExplosion && (this.y < -50 || this.alpha <= 0)) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.alpha);
+                ctx.font = `${this.size}px sans-serif`;
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rot);
+                ctx.fillText(this.char, -this.size / 2, this.size / 2);
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            resizeCanvas();
+            particles = [];
+            for (let i = 0; i < 30; i++) {
+                particles.push(new HeartParticle(false));
+            }
+        }
+
+        function triggerHeartExplosion() {
+            for (let i = 0; i < 130; i++) {
+                particles.push(new HeartParticle(true));
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.update();
+                p.draw();
+
+                if (p.isExplosion && p.alpha <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        window.onload = function() {
+            initParticles();
+            animateParticles();
+        };
+    </script>
+</body>
+</html>
+```
